@@ -29,22 +29,28 @@ var questions=[{ que :"Javascript is used for what purpose?",
                 corr_ans: "1"
 
               },
-
               ]
 
   var timer, curr_ques =0, ans,score=0;
+  
+  if(localStorage.highscore)
+    {
+     document.querySelector("#topScore").textContent = localStorage.highscore;
+    }
 
  function loadGame()
   {
     if(localStorage.highscore)
     {
-      
-      document.querySelector("#topScore").textContent = localStorage.highscore;
-      
+           document.querySelector("#topScore").textContent = localStorage.highscore;
     }
+
+    document.querySelector("#endGame").style.display="none";
+    document.querySelector("#save").style.display="none";
+
      // console.log("load game is called");
       
-      document.querySelector("#header").style.display = 'none   ';
+      document.querySelector("#header").style.display = 'none';
       document.querySelector("#content").style.display = 'block ';   
      loadQuestion(curr_ques);
      timer=30;
@@ -58,7 +64,7 @@ var questions=[{ que :"Javascript is used for what purpose?",
 {
   if(curr_ques<5)
   {
-    console.log("load question is called")
+    // console.log("load question is called")
     
    
 
@@ -70,7 +76,7 @@ var questions=[{ que :"Javascript is used for what purpose?",
     document.querySelector("#option-4").textContent=questions[curr_ques].ans_opt[3];
     
     ans=questions[curr_ques].corr_ans;    
-    console.log(` answer is : ${ans}`);
+    // console.log(` answer is : ${ans}`);
 
 
   
@@ -94,7 +100,7 @@ function checkAnswer(user_ans)
 
       if(questions[curr_ques].corr_ans == user_ans)
       {
-        console.log("correct");
+        // console.log("correct");
         score += 20;
         document.querySelector('#topScore').textContent = score
         // console.log(score)
@@ -124,14 +130,15 @@ function checkAnswer(user_ans)
     else
     {
       endgame()
-      
-      
+           
     }
   }
 
   function endgame()
   {
     timer=0;
+    clearInterval(tempTimer);
+
     document.querySelector('#timeLeft').textContent=timer;
 
     document.querySelector("#content").style.display = 'none ';  
@@ -145,40 +152,34 @@ function checkAnswer(user_ans)
         
 
       }
-      else
-      {
-
-      }
+      
      
   }
 
   function tempStorage()
   {
-    console.log("tempStorage called");
-    time=0;
-    document.querySelector("#timeLeft").textContent = timer;
+   
 
-     localStorage.Name = document.querySelector('#playerName').value 
+     localStorage.name = document.querySelector('#playerName').value 
      localStorage.highscore = score;
 
      document.querySelector("#save").style.display = "none";
      document.querySelector("#endGame").style.display = "none";
 
-    console.log("storage complete");
+    // console.log("storage complete");
     document.querySelector("#header").style.display = 'block '; 
     document.querySelector("#timeLeft").textContent = timer;
     // loadGame();
      curr_ques=0;
-     
+     score=0
      timer=30;
-
   }
 
   function clearScore()
   {
-    if(localStorage.Name)
+    if(localStorage.name)
     {
-      localStorage.Name = '';
+      localStorage.name = '';
       localStorage.highscore = '';
       
       document.querySelector("#save").style.display = "none";
